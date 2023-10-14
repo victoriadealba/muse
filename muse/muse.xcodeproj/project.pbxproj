@@ -14,6 +14,7 @@
 		43EDB4C52AD9FD4C00A1FEAB /* museTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EDB4C42AD9FD4C00A1FEAB /* museTests.swift */; };
 		43EDB4CF2AD9FD4C00A1FEAB /* museUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EDB4CE2AD9FD4C00A1FEAB /* museUITests.swift */; };
 		43EDB4D12AD9FD4C00A1FEAB /* museUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EDB4D02AD9FD4C00A1FEAB /* museUITestsLaunchTests.swift */; };
+		5FDE228A2ADAF0D0003CE68D /* ChatGPTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE22892ADAF0D0003CE68D /* ChatGPTView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		43EDB4CA2AD9FD4C00A1FEAB /* museUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = museUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43EDB4CE2AD9FD4C00A1FEAB /* museUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = museUITests.swift; sourceTree = "<group>"; };
 		43EDB4D02AD9FD4C00A1FEAB /* museUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = museUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		5FDE22892ADAF0D0003CE68D /* ChatGPTView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGPTView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			children = (
 				43EDB4B32AD9FD4A00A1FEAB /* museApp.swift */,
 				43EDB4B52AD9FD4A00A1FEAB /* ContentView.swift */,
+				5FDE22892ADAF0D0003CE68D /* ChatGPTView.swift */,
 				43EDB4B72AD9FD4C00A1FEAB /* Assets.xcassets */,
 				43EDB4B92AD9FD4C00A1FEAB /* Preview Content */,
 			);
@@ -259,6 +262,7 @@
 			files = (
 				43EDB4B62AD9FD4A00A1FEAB /* ContentView.swift in Sources */,
 				43EDB4B42AD9FD4A00A1FEAB /* museApp.swift in Sources */,
+				5FDE228A2ADAF0D0003CE68D /* ChatGPTView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
