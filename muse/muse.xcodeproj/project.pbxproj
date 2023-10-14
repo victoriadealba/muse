@@ -15,6 +15,8 @@
 		43EDB4CF2AD9FD4C00A1FEAB /* museUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EDB4CE2AD9FD4C00A1FEAB /* museUITests.swift */; };
 		43EDB4D12AD9FD4C00A1FEAB /* museUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EDB4D02AD9FD4C00A1FEAB /* museUITestsLaunchTests.swift */; };
 		5FDE228A2ADAF0D0003CE68D /* ChatGPTView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDE22892ADAF0D0003CE68D /* ChatGPTView.swift */; };
+		5FDE228D2ADB28B1003CE68D /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5FDE228C2ADB28B1003CE68D /* OpenAIKit */; };
+		5FDE22902ADB28E7003CE68D /* OpenAISwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5FDE228F2ADB28E7003CE68D /* OpenAISwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FDE22902ADB28E7003CE68D /* OpenAISwift in Frameworks */,
+				5FDE228D2ADB28B1003CE68D /* OpenAIKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,6 +150,10 @@
 			dependencies = (
 			);
 			name = muse;
+			packageProductDependencies = (
+				5FDE228C2ADB28B1003CE68D /* OpenAIKit */,
+				5FDE228F2ADB28E7003CE68D /* OpenAISwift */,
+			);
 			productName = muse;
 			productReference = 43EDB4B02AD9FD4A00A1FEAB /* muse.app */;
 			productType = "com.apple.product-type.application";
@@ -218,6 +226,10 @@
 				Base,
 			);
 			mainGroup = 43EDB4A72AD9FD4A00A1FEAB;
+			packageReferences = (
+				5FDE228B2ADB28B1003CE68D /* XCRemoteSwiftPackageReference "OpenAI" */,
+				5FDE228E2ADB28E7003CE68D /* XCRemoteSwiftPackageReference "OpenAISwift" */,
+			);
 			productRefGroup = 43EDB4B12AD9FD4A00A1FEAB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -611,6 +623,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5FDE228B2ADB28B1003CE68D /* XCRemoteSwiftPackageReference "OpenAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/FuturraGroup/OpenAI#installation";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		5FDE228E2ADB28E7003CE68D /* XCRemoteSwiftPackageReference "OpenAISwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adamrushy/OpenAISwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5FDE228C2ADB28B1003CE68D /* OpenAIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5FDE228B2ADB28B1003CE68D /* XCRemoteSwiftPackageReference "OpenAI" */;
+			productName = OpenAIKit;
+		};
+		5FDE228F2ADB28E7003CE68D /* OpenAISwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5FDE228E2ADB28E7003CE68D /* XCRemoteSwiftPackageReference "OpenAISwift" */;
+			productName = OpenAISwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 43EDB4A82AD9FD4A00A1FEAB /* Project object */;
 }
