@@ -27,19 +27,22 @@ struct ChatGPTView: View {
             }
             //Text(Answer)
             ZStack{
-                TextEditor(text: $promttf)
-                    .font(.body)
-                    .cornerRadius(10)
-                    .frame(height: 200)
-                if promttf.count == 0{
-                    Text("What music are you feeling today?").foregroundColor(.gray)
-                }
+                TextField("What music are you feeling today?",text: $promttf)
+                    .padding()
+                    .background(Color.gray.opacity(0.3).cornerRadius(10))
+                    .foregroundColor(.black)
             }
             Button(action:{
-                            Answer = theopenaiclass.processPrompt(prompt: "Answer the following problem:\(promttf)")!
-                        }){
-                            Text("Enter")
-                        }
+                            Answer = theopenaiclass.processPrompt(prompt: "List 1 to 5 song recommendations:\(promttf)")!
+                            promttf = ""
+            }, label:{
+                Text("Enter")
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.blue.cornerRadius(10))
+                    .foregroundColor(.white)
+            }
+            )
                     }
         .padding()
     }
@@ -53,7 +56,7 @@ struct ChatGPTView_Previews: PreviewProvider {
 public class OpenAIConnector {
     let openAIURL = URL(string: "https://api.openai.com/v1/engines/text-davinci-002/completions")
     var openAIKey: String {
-        return "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"
+        return "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"
     }
     
     private func executeRequest(request: URLRequest, withSessionConfig sessionConfig: URLSessionConfiguration?) -> Data? {
