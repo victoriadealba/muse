@@ -109,7 +109,7 @@ struct ChatGPTView_Previews: PreviewProvider {
 public class OpenAIConnector {
     let openAIURL = URL(string: "https://api.openai.com/v1/engines/text-davinci-002/completions")
     var openAIKey: String {
-        return "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"
+        return ""
     }
     
     private func executeRequest(request: URLRequest, withSessionConfig sessionConfig: URLSessionConfiguration?) -> Data? {
