@@ -7,99 +7,94 @@
 
 import SwiftUI
 
-/*struct ChatGPTView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-*/
-
-
 struct ChatGPTView: View {
     @State var promttf = ""
     @State var Answer = ""
     @State var degrees = 0.0
     @State private var musicRec = ""
+    @State var isBouncing = false
+    @State var bounceCount = 0 // Counter for the number of bounces
+    
+    let maxBounces = 3 // Set the maximum number of bounces
+    
     let theopenaiclass = OpenAIConnector()
-    
-    var youtubeSearch: URL? {
-        if let query = Answer.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed){
-            let AnsTrimmed = Answer.replacingOccurrences(of: " ", with: "")
-            musicRec=AnsTrimmed
-            let urlString = "https://www.youtube.com/results?search_query=<SEARCH_QUERY>"
-            let updateLink = "\(urlString)" + "\(AnsTrimmed)"
-            print(updateLink)
-            return URL(string: updateLink)
-        }
-        return nil
-    }
-    
     
     var body: some View {
         VStack {
-            Image("Headphones")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 200, height: 200)
+            // Headphones with bouncing effect
+            VStack {
+                ZStack {
+                    Image("Headphones")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 200, height: 200)
+                        .scaleEffect(isBouncing ? 1.1 : 1.0) // Apply bouncing effect conditionally
+                        .onAppear {
+                            withAnimation(Animation.easeInOut(duration: 1).repeatCount(bounceCount >= maxBounces ? 0 : 1, autoreverses: true)) {
+                                isBouncing = true
+                            }
+                        }
+                    .frame(maxHeight: 200) // Ensure a fixed height for the bouncing image
+                }
+            }
+
             Spacer()
-            if Answer.count != 0{
+
+            // Answer text and YouTube button
+            ZStack {
                 Text(Answer)
-                    .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                    .fixedSize(horizontal: false, vertical: true)
                     .multilineTextAlignment(.center)
                     .padding(5)
-                    .frame(
-                       width: 300,
-                       height: 200
-                    )
+                    .frame(width: 300, height: 200)
                     .background(Rectangle().fill(Color.white))
-                if let encodedAnswer = Answer.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed){
-                    let youtubeURL = "https://www.youtube.com/results?search_query=\(encodedAnswer)"
-                    
-                    Button("Search on Youtube"){
-                        if let url=URL(string: youtubeURL){
-                            UIApplication.shared.open(url)
+
+                if Answer.count != 0 {
+                    Image("youtube")
+                        .resizable()
+                        .aspectRatio(contentMode:.fit)
+                        .frame(width:50,height: 50)
+                        .onTapGesture{
+                        if let encodedAnswer = Answer.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+                            let youtubeURL = "https://www.youtube.com/results?search_query=\(encodedAnswer)"
+                            if let url = URL(string: youtubeURL) {
+                                UIApplication.shared.open(url)
+                            }
                         }
                     }
-                    
+                    .offset(y: 100) // Position the button below the answer text
                 }
-                
-        
             }
-           
+
             Spacer()
-            ZStack{
-                TextField("What music are you feeling today?",text: $promttf)
+
+            // Text field and Enter button
+            VStack {
+                TextField("What music are you feeling today?", text: $promttf)
                     .padding()
                     .background(Color.gray.opacity(0.3).cornerRadius(10))
                     .foregroundColor(.black)
+                    .frame(maxHeight: 50) // Ensure a fixed height for the text field
+
+                Button(action: {
+                    Answer = theopenaiclass.processPrompt(prompt: "Name a specific song recommendation based on the prompt:\(promttf)")!
+                    promttf = ""
+                    bounceCount += 1 // Increment the bounce counter
+                }, label: {
+                    Text("Enter")
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.blue.cornerRadius(10))
+                        .foregroundColor(.white)
+                })
+                .frame(maxHeight: 50) // Ensure a fixed height for the button
             }
-            Button(action:{
-                            Answer = theopenaiclass.processPrompt(prompt: "Name a specific song recommendation based on the prompt:\(promttf)")!
-                            promttf = ""
-                
-                
-            }, label:{
-                Text("Enter")
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue.cornerRadius(10))
-                    .foregroundColor(.white)
-                
-                
-               
-            }
-            )
-            
-                    }
-        .padding()
-       /* if let searchURL = youtubeSearch {
-            UIApplication.shared.open(searchURL)
         }
-        */
-        
+        .padding()
     }
 }
 
+// ... Your OpenAIConnector and related structs here
 
 struct ChatGPTView_Previews: PreviewProvider {
     static var previews: some View {
@@ -168,9 +163,7 @@ public class OpenAIConnector {
         if let requestData = executeRequest(request: request, withSessionConfig: nil) {
             let jsonStr = String(data: requestData, encoding: String.Encoding(rawValue: String.Encoding.utf8.rawValue))!
             print(jsonStr)
-            ///
-            //MARK: I know there's an error below, but we'll fix it later on in the article, so make sure not to change anything
-            ///
+            
             let responseHandler = OpenAIResponseHandler()
 
             return responseHandler.decodeJson(jsonString: jsonStr)?.choices[0].text
