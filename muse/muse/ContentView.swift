@@ -26,8 +26,7 @@ struct homepage: View{
                     .resizable()
                     .frame(width: 550, height: 1000, alignment: .top)
                     .offset(x:50,y:30)
-                    
-                
+
                     .overlay( NavigationLink(">", destination: ChatGPTView())
                         .foregroundColor(Color(red: 0.165, green: 0.337, blue: 0.529))
                         .font(.largeTitle)
