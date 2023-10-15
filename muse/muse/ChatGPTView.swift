@@ -19,13 +19,54 @@ struct ChatGPTView: View {
     @State var promttf = ""
     @State var Answer = ""
     @State var degrees = 0.0
+    @State private var musicRec = ""
     let theopenaiclass = OpenAIConnector()
+    
+    var youtubeSearch: URL? {
+        if let query = Answer.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed){
+            let AnsTrimmed = Answer.replacingOccurrences(of: " ", with: "")
+            musicRec=AnsTrimmed
+            let urlString = "https://www.youtube.com/results?search_query=<SEARCH_QUERY>"
+            let updateLink = "\(urlString)" + "\(AnsTrimmed)"
+            print(updateLink)
+            return URL(string: updateLink)
+        }
+        return nil
+    }
+    
+    
     var body: some View {
         VStack {
+            Image("Headphones")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 200, height: 200)
+            Spacer()
             if Answer.count != 0{
                 Text(Answer)
+                    .fixedSize(horizontal: false, vertical: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                    .multilineTextAlignment(.center)
+                    .padding(5)
+                    .frame(
+                       width: 300,
+                       height: 200
+                    )
+                    .background(Rectangle().fill(Color.white))
+                if let encodedAnswer = Answer.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed){
+                    let youtubeURL = "https://www.youtube.com/results?search_query=\(encodedAnswer)"
+                    
+                    Button("Search on Youtube"){
+                        if let url=URL(string: youtubeURL){
+                            UIApplication.shared.open(url)
+                        }
+                    }
+                    
+                }
+                
+        
             }
-            //Text(Answer)
+           
+            Spacer()
             ZStack{
                 TextField("What music are you feeling today?",text: $promttf)
                     .padding()
@@ -33,20 +74,32 @@ struct ChatGPTView: View {
                     .foregroundColor(.black)
             }
             Button(action:{
-                            Answer = theopenaiclass.processPrompt(prompt: "List 1 to 5 song recommendations:\(promttf)")!
+                            Answer = theopenaiclass.processPrompt(prompt: "Name a specific song recommendation based on the prompt:\(promttf)")!
                             promttf = ""
+                
+                
             }, label:{
                 Text("Enter")
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(Color.blue.cornerRadius(10))
                     .foregroundColor(.white)
+                
+                
+               
             }
             )
+            
                     }
         .padding()
+       /* if let searchURL = youtubeSearch {
+            UIApplication.shared.open(searchURL)
+        }
+        */
+        
     }
 }
+
 
 struct ChatGPTView_Previews: PreviewProvider {
     static var previews: some View {
@@ -56,7 +109,7 @@ struct ChatGPTView_Previews: PreviewProvider {
 public class OpenAIConnector {
     let openAIURL = URL(string: "https://api.openai.com/v1/engines/text-davinci-002/completions")
     var openAIKey: String {
-        return "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"
+        return "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"
     }
     
     private func executeRequest(request: URLRequest, withSessionConfig sessionConfig: URLSessionConfiguration?) -> Data? {
@@ -90,7 +143,7 @@ public class OpenAIConnector {
     
     public func processPrompt(
         prompt: String
-    ) -> Optional<String> {
+        , maxRecs: Int=1) -> Optional<String> {
         
         var request = URLRequest(url: self.openAIURL!)
         request.httpMethod = "POST"
@@ -98,7 +151,8 @@ public class OpenAIConnector {
         request.addValue("Bearer \(self.openAIKey)", forHTTPHeaderField: "Authorization")
         let httpBody: [String: Any] = [
             "prompt" : prompt,
-            "max_tokens" : 100
+            "max_tokens" : 100,
+            "n" : maxRecs
      //       "temperature": String(temperature)
         ]
         
@@ -172,3 +226,4 @@ public extension Binding where Value: Equatable {
         })
     }
 }
+
