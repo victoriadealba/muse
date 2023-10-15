@@ -26,13 +26,23 @@ struct homepage: View{
                     .resizable()
                     .frame(width: 550, height: 1000, alignment: .top)
                     .offset(x:50,y:30)
+                    
+                
                     .overlay( NavigationLink(">", destination: ChatGPTView())
-                        .foregroundColor(Color.white)
-                        .font(.title)
+                        .foregroundColor(Color(red: 0.165, green: 0.337, blue: 0.529))
+                        .font(.largeTitle)
                         .padding()
                               //.border(Color.white, width:5)
-                        .offset(x: 140, y:350))
-                
+                        .offset(x: 115, y:325))
+                        
+            
+                    .overlay(Circle()
+                        .position(x:150,y:360)
+                        .foregroundColor(Color.white)
+                        .opacity(0.4)
+                        .frame(width: 73.0, height: 67.0))
+                        
+
                     .padding(.top,30)
             }
         }
