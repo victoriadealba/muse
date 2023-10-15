@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/*struct ChatGPTView: View {
+/*/*struct ChatGPTView: View {
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
     }
@@ -57,6 +57,41 @@ struct ChatGPTView: View {
             }
             )
             
+                    }
+        .padding()
+    }
+}
+*/
+
+
+struct ChatGPTView: View {
+    @State var promttf = ""
+    @State var Answer = ""
+    @State var degrees = 0.0
+    let theopenaiclass = OpenAIConnector()
+    var body: some View {
+        VStack {
+            if Answer.count != 0{
+                Text(Answer)
+            }
+            //Text(Answer)
+            ZStack{
+                TextField("What music are you feeling today?",text: $promttf)
+                    .padding()
+                    .background(Color.gray.opacity(0.3).cornerRadius(10))
+                    .foregroundColor(.black)
+            }
+            Button(action:{
+                            Answer = theopenaiclass.processPrompt(prompt: "List 1 to 5 song recommendations:\(promttf)")!
+                            promttf = ""
+            }, label:{
+                Text("Enter")
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.blue.cornerRadius(10))
+                    .foregroundColor(.white)
+            }
+            )
                     }
         .padding()
     }
